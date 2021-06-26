@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/nav_myGardenIcon"
+        android:icon="@drawable/plant"
+        android:contentDescription="Garden"
+        android:iconTint="@color/white"
+        android:visible="true"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="My Garden" />
+
+    <item
+        android:id="@+id/nav_waterNowIcon"
+        android:icon="@drawable/watering_can"
+        android:contentDescription="Water Now"
+        android:iconTint="@color/white"
+        android:visible="true"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="Water Now" />
+
+    <item
+        android:id="@+id/nav_profileIcon"
+        android:icon="@drawable/user_icon"
+        android:contentDescription="Water Now"
+        android:iconTint="@color/white"
+        android:visible="true"
+        android:enabled="true"
+        app:showAsAction="ifRoom"
+        android:title="Profile" />
+
+
+
+
+
+
+</menu>

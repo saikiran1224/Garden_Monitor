@@ -7,4 +7,29 @@
     android:background="@color/light_green"
     tools:context=".activities.MainActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/fragmentContainer"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemIconSize="23dp"
+        app:elevation="2dp"
+        style="@style/Widget.App.BottomNavigationView"
+        android:layout_centerHorizontal="true"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/bottom_navigation"
+        />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

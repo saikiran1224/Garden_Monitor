@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_green"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.MyGardenFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="@color/greenVar2"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:minLines="2"
+            android:layout_toStartOf="@id/profileIcon"
+            android:maxLines="2"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="15dp"
+            android:textSize="20sp"
+            android:text="Hello,\nSaikiran Kopparthi"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:backgroundTint="@color/greenVar2"
+            android:layout_height="50dp"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:id="@+id/profileIcon"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/circle_bg"
+            android:src="@drawable/scanner"
+            app:tint="@color/white"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:paddingStart="20dp"
+            android:cursorVisible="true"
+            android:drawablePadding="10dp"
+            android:layout_height="50dp"
+            android:textColor="@color/greenVar2"
+            android:layout_marginTop="28dp"
+            android:hint="Search here..."
+            android:gravity="center_vertical"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/edtSearch"
+            android:background="@drawable/rounded_bg"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:drawableTint="@color/greenVar2"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:layout_below="@id/profileIcon" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="295dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="30dp"
+            app:lottie_autoPlay="true"
+            android:scaleType="centerCrop"
+            android:padding="25dp"
+            app:lottie_loop="true"
+            android:id="@+id/noDataAnim"
+            app:lottie_url="https://assets5.lottiefiles.com/packages/lf20_jCmeIg.json"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/edtSearch"/>
+
+<!--        Plant Image URL: https://assets10.lottiefiles.com/packages/lf20_valvvrfy.json-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/noDataAnim"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="25dp"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/greenVar2"
+            android:text="Please click on Scan Button and add your Plants here" />
+
+
+
+
+    </RelativeLayout>
+
+
+
+</androidx.core.widget.NestedScrollView>

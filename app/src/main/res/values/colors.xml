@@ -16,4 +16,6 @@
     <color name="lightGreenVar1">#85B14B</color>
     <color name="normalgreen">#6EA35D</color>
 
+    <color name="grey">#54CFCECE</color>
+
 </resources>
