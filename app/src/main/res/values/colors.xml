@@ -18,4 +18,9 @@
 
     <color name="grey">#54CFCECE</color>
 
+    <color name="greenAlpha">#80314902</color>
+
+<!--    For Transparency Related:-->
+<!--    https://stackoverflow.com/questions/11285961/how-to-make-a-background-20-transparent-on-android-->
+
 </resources>

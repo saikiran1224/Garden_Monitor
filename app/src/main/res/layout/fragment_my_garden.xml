@@ -18,7 +18,7 @@
             android:padding="5dp"
             android:textStyle="bold"
             android:minLines="2"
-            android:layout_toStartOf="@id/profileIcon"
+            android:layout_toStartOf="@id/scanPlantsIcon"
             android:maxLines="2"
             android:layout_alignParentStart="true"
             android:layout_marginStart="15dp"
@@ -35,7 +35,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="12dp"
-            android:id="@+id/profileIcon"
+            android:id="@+id/scanPlantsIcon"
             android:layout_marginEnd="15dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
@@ -52,6 +52,7 @@
             android:layout_height="50dp"
             android:textColor="@color/greenVar2"
             android:layout_marginTop="28dp"
+            android:maxLines="1"
             android:hint="Search here..."
             android:gravity="center_vertical"
             android:layout_marginBottom="20dp"
@@ -61,7 +62,7 @@
             android:layout_marginEnd="20dp"
             android:drawableTint="@color/greenVar2"
             android:drawableStart="@drawable/ic_baseline_search_24"
-            android:layout_below="@id/profileIcon" />
+            android:layout_below="@id/scanPlantsIcon" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="295dp"
