@@ -2,6 +2,7 @@ package com.kirandroid.gardenmonitor.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,12 +33,13 @@ class ScanPlantsActivity : AppCompatActivity() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_plants)
 
        // requestWindowFeature(Window.FEATURE_NO_TITLE);
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+      //  window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -54,6 +56,8 @@ class ScanPlantsActivity : AppCompatActivity() {
         outputDirectory = getOutputDirectory()
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+
+
 
     }
 
@@ -85,6 +89,8 @@ class ScanPlantsActivity : AppCompatActivity() {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
+
+
                     val msg = "Photo capture succeeded: $savedUri"
                     Toast.makeText(this@ScanPlantsActivity, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
@@ -119,8 +125,27 @@ class ScanPlantsActivity : AppCompatActivity() {
                 cameraProvider.unbindAll()
 
                 // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
+               val camera = cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageCapture)
+
+                // Code for switching On and Off Flashlight
+                flashLight.setOnClickListener {
+
+                    val flashStatusVal = flashStatus.text.toString()
+
+                    if ( camera.getCameraInfo().hasFlashUnit() && flashStatusVal.equals("off")) {
+                        camera.getCameraControl().enableTorch(true)
+                        flashStatus.setText("on")
+                        flashLight.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_flash_on_24))
+                    } else if(camera.getCameraInfo().hasFlashUnit() && flashStatusVal.equals("on")) {
+                        camera.getCameraControl().enableTorch(false)
+                        flashStatus.setText("off")
+                        flashLight.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_flash_off_24))
+                    } else {
+                        Toast.makeText(this,"Sorry, Your Phone does not support this Operation",Toast.LENGTH_LONG).show()
+                    }
+                }
+
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)

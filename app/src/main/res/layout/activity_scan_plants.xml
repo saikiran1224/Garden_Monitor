@@ -3,15 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#88000000"
     android:layout_height="match_parent"
     tools:context=".activities.ScanPlantsActivity">
 
+
+
+
+<!--
     <Button
         android:id="@+id/camera_capture_button"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginBottom="50dp"
         android:scaleType="fitCenter"
         android:text="Take Photo"
@@ -19,6 +22,32 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:elevation="2dp" />
+-->
+
+    <ImageView
+        android:id="@+id/camera_capture_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:visibility="visible"
+        android:background="@drawable/circle_bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:layout_marginBottom="10dp"
+        android:alpha="1"
+        android:padding="15dp"
+        android:backgroundTint="@color/light_green"
+        app:layout_constraintBottom_toTopOf="@id/txtOr"
+        android:src="@drawable/scanner"
+        app:tint="@color/greenVar2"
+        android:scaleType="fitCenter"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:elevation="2dp" />
+
+
+
+
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
@@ -28,39 +57,111 @@
 
     <com.kirandroid.gardenmonitor.activities.RectangleOverlay
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/light_green"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/parentRelative"
+        android:background="@drawable/bottom_rounded_circle"
+        android:layout_marginTop="0dp"
+        android:padding="15dp"
+        android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_width="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:id="@+id/backPressIcon"
+            android:layout_alignParentStart="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:layout_centerVertical="true"
+            android:padding="2dp"
+            android:visibility="visible"
+            app:tint="@color/greenVar2"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24"
+            tools:targetApi="m" />
 
-    </com.kirandroid.gardenmonitor.activities.RectangleOverlay>
-
-
-    <!--
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/greenVar2"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:layout_marginStart="5dp"
+            android:textStyle="normal"
+            android:id="@+id/txtCapturePlant"
+            android:text="Capture Plant"
+            android:layout_toEndOf="@id/backPressIcon" />
 
 
         <ImageView
-            android:id="@+id/selfie"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
-            tools:visibility="visible"
-            tools:background="@color/grey" />
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_baseline_flash_off_24"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:clickable="true"
+            android:id="@+id/flashLight"
+            tools:targetApi="m"
+            app:tint="@color/greenVar2"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:layout_centerVertical="true" />
 
-        <ImageView
-            android:id="@+id/overlay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="off"
+            android:id="@+id/flashStatus"
+            android:visibility="gone" />
 
-    </FrameLayout>
-    -->
+    </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Or"
+        android:textSize="16sp"
+        android:id="@+id/txtOr"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/btnSelectFromGallery"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/greenVar2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="20dp"
+        android:padding="10dp"
+        android:textStyle="normal"
+        android:id="@+id/btnSelectFromGallery"
+        android:text="Select from Gallery"
+        android:backgroundTint="@color/light_green"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:elevation="2dp"
+        android:focusableInTouchMode="true"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
