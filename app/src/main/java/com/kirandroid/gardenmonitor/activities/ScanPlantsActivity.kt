@@ -1,6 +1,7 @@
 package com.kirandroid.gardenmonitor.activities
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.net.Uri
@@ -63,8 +64,6 @@ class ScanPlantsActivity : AppCompatActivity() {
 
     private fun takePhoto() {
 
-        Toast.makeText(this@ScanPlantsActivity, "hELLO", Toast.LENGTH_SHORT).show()
-
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture
 
@@ -90,9 +89,14 @@ class ScanPlantsActivity : AppCompatActivity() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
 
+                    val intent = Intent(this@ScanPlantsActivity, ManagePlantsActivity::class.java)
+                    intent.putExtra("imageURI", savedUri.toString())
+                    intent.putExtra("image_source","Camera")
+                    startActivity(intent)
+
 
                     val msg = "Photo capture succeeded: $savedUri"
-                    Toast.makeText(this@ScanPlantsActivity, msg, Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(this@ScanPlantsActivity, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
                 }
             })

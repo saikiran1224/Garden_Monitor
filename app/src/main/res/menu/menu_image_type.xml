@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/option_0"
+        android:title="Choose Type" />
+    <item android:id="@+id/option_1"
+        android:title="Leaf" />
+    <item android:id="@+id/option_2"
+        android:title="Flower" />
+    <item android:id="@+id/option_3"
+        android:title="Branch" />
+
+</menu>
