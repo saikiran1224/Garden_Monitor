@@ -2,8 +2,10 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-
 }
+
+apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 30
@@ -53,6 +55,12 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
 
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0-beta01'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+
+
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
@@ -76,6 +84,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
 
     def room_version = "1.1.1"
 

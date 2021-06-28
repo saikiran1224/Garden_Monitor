@@ -82,6 +82,7 @@ class ScanPlantsActivity : AppCompatActivity() {
         // been taken
         imageCapture?.takePicture(
             outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
+
                 override fun onError(exc: ImageCaptureException) {
                     Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
                 }
