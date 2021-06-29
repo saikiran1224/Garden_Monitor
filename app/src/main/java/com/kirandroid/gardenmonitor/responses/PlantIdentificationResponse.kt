@@ -1,5 +1,7 @@
 package com.kirandroid.gardenmonitor.responses
 
+import java.math.BigDecimal
+
 data class PlantIdentificationResponse(
     val language: String,
     val preferedReferential: String,
@@ -18,12 +20,12 @@ data class Query(
 data class Result(
     val gbif: Gbif,
     val images: List<Image>,
-    val score: Int,
+    val score: BigDecimal,
     val species: Species
 )
 
 data class Gbif(
-    val id: Int
+    val id: Long
 )
 
 data class Image(
@@ -46,7 +48,7 @@ data class Species(
 
 data class Date(
     val string: String,
-    val timestamp: Int
+    val timestamp: Long
 )
 
 data class Url(

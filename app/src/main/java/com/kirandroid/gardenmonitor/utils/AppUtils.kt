@@ -6,6 +6,8 @@ import java.util.*
 
 object AppUtils {
     private var instance: AppUtils? = null
+    const val plantNetApiKey:String = "2b106yy0yLNcCZELH9t9nzUFbO"
+
 
     fun AppUtils() {
         instance = this

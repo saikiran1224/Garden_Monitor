@@ -11,6 +11,9 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
@@ -29,7 +32,10 @@ import com.google.firebase.storage.ktx.storage
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.adapters.PlantOrganImageAdapter
 import com.kirandroid.gardenmonitor.models.PlantOrganImageData
+import com.kirandroid.gardenmonitor.responses.PlantIdentificationResponse
+import com.kirandroid.gardenmonitor.utils.AppPreferences
 import com.kirandroid.gardenmonitor.utils.AppUtils
+import com.kirandroid.gardenmonitor.viewmodels.PlantOrganImageViewModel
 import kotlinx.android.synthetic.main.activity_manage_plants.*
 import kotlinx.android.synthetic.main.dialog_show_selected_image.*
 
@@ -58,9 +64,24 @@ class ManagePlantsActivity : AppCompatActivity() {
     lateinit var storage: FirebaseStorage
     lateinit var storageRef: StorageReference
 
+    // viewmodel initialising
+    lateinit var plantOrganImageViewModel: PlantOrganImageViewModel
+
+    lateinit var imagesList: ArrayList<String>
+    lateinit var organsList: ArrayList<String>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_plants)
+
+        // viewmodel
+        plantOrganImageViewModel = ViewModelProvider(this)[PlantOrganImageViewModel::class.java]
+
+        // initialising App Preferences
+        AppPreferences.init(this)
+
+        imagesList = ArrayList()
+        organsList = ArrayList()
 
         val intent = intent
         if (!intent.getStringExtra("image_source")!!.isEmpty()) {
@@ -68,17 +89,17 @@ class ManagePlantsActivity : AppCompatActivity() {
             showCustomDialog(intent.getStringExtra("imageURI")!!)
         }
 
-
-
-
         // initialising Cloud Firestore
         FirebaseApp.initializeApp(this)
         db = Firebase.firestore
         storage = Firebase.storage
         storageRef = storage.reference
 
+        recognizePlant.setOnClickListener { recognisePlant() }
+
 
     }
+
 
     @SuppressLint("CutPasteId")
     fun showCustomDialog(stringURIExtra: String) {
@@ -140,52 +161,32 @@ class ManagePlantsActivity : AppCompatActivity() {
                         imageUrl = it.result.toString()
 
                         // sending data to Cloud Firestore
-                        val plantOrganImage = PlantOrganImageData(
-                            imageUrl.toString(),
-                            chip.text.toString(),
-                            AppUtils.getCurrentDate() + " " + AppUtils.getCurrentTime()
-                        )
+                        val plantOrganImage = PlantOrganImageData(imageUrl.toString(), chip.text.toString(), AppUtils.getCurrentDate() + " " + AppUtils.getCurrentTime())
                         db.collection("Plant_Organ")
                             .add(plantOrganImage)
                             .addOnSuccessListener { documentReference ->
-                                Toast.makeText(
-                                    this,
-                                    "Image Uploaded Successfully !",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                Toast.makeText(this, "Image Uploaded Successfully !", Toast.LENGTH_LONG).show()
                             }.addOnFailureListener { error ->
                                 Toast.makeText(this, "Error adding data: $error", Toast.LENGTH_LONG).show()
                             }
-
-
                         getPlantOrganImageData()
-
                         dialog.dismiss()
-
                     } else {
                         getPlantOrganImageData()
-
                         Toast.makeText(this,"Some Error Occurred! Please try again", Toast.LENGTH_LONG).show()
                     }
                 }
-
             } else {
                 // user has not selected any chip
-
                 Toast.makeText(this, "Please choose relevant Organ", Toast.LENGTH_LONG).show()
             }
         }
-
         dialog.show()
-
-
-
     }
 
     fun getPlantOrganImageData() {
 
         val plantsOrganList: ArrayList<PlantOrganImageData> = ArrayList<PlantOrganImageData>()
-
         db.collection("Plant_Organ")
             .get()
             .addOnSuccessListener { result ->
@@ -194,33 +195,63 @@ class ManagePlantsActivity : AppCompatActivity() {
                 for (document in result) {
                     val plantOrganImageData = document.toObject<PlantOrganImageData>()
                     plantsOrganList.add(plantOrganImageData)
+                    imagesList.add(plantOrganImageData.plantOrganUrl)
+                    organsList.add(plantOrganImageData.organName.lowercase())
+
                     Log.d("TAG", "${document.id} => ${document.data}")
                 }
 
                 // Adding placeholder layout
-                if(plantsOrganList.size < 5) {
-                    plantsOrganList.add(PlantOrganImageData("imageURL","addImage","Date"))
+                if (plantsOrganList.size < 5) {
+                    plantsOrganList.add(PlantOrganImageData("imageURL", "addImage", "Date"))
                 }
 
                 // disabling and enabling the button
-                if(!plantsOrganList.isEmpty() && plantsOrganList.size < 4) {
+                if (!plantsOrganList.isEmpty() && plantsOrganList.size < 4) {
                     recognizePlant.isEnabled = false
                 }
 
                 // initialising the adapter
-                if (!plantsOrganList.isEmpty() ) {
+                if (!plantsOrganList.isEmpty()) {
                     val plantOrganImageAdapter = PlantOrganImageAdapter(this, plantsOrganList)
-                    val gridLayoutManager = GridLayoutManager(this,2)
+                    val gridLayoutManager = GridLayoutManager(this, 2)
                     plantsRecycler.adapter = plantOrganImageAdapter
                     plantsRecycler.layoutManager = gridLayoutManager
                 } else {
-                    Toast.makeText(this,""+plantsOrganList.size,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "" + plantsOrganList.size, Toast.LENGTH_SHORT).show()
                 }
-
             }
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents.", exception)
             }
 
     }
+
+    private fun recognisePlant() {
+
+        if(!imagesList.isEmpty() && !organsList.isEmpty()) {
+
+            plantOrganImageViewModel.getPlantIdentificationData(imagesList,organsList).observe(this, Observer {
+
+                for(result in it.results) {
+                    // displaying all lists
+                }
+
+                AppPreferences.showToast(this, it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score)
+
+                txtPlantName.text = it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score
+
+            })
+
+
+
+
+        } else {
+            AppPreferences.showToast(this,"Something wrong Occurred! Please try again")
+        }
+
+
+
+    }
+
 }
