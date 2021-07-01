@@ -2,6 +2,7 @@ package com.kirandroid.gardenmonitor.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.net.Uri
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.FirebaseApp
@@ -35,6 +37,8 @@ import com.kirandroid.gardenmonitor.utils.AppPreferences
 import com.kirandroid.gardenmonitor.utils.AppUtils
 import com.kirandroid.gardenmonitor.viewmodels.PlantOrganImageViewModel
 import kotlinx.android.synthetic.main.activity_manage_plants.*
+import org.w3c.dom.Text
+import java.math.RoundingMode
 import kotlin.math.roundToInt
 
 
@@ -204,9 +208,7 @@ class ManagePlantsActivity : AppCompatActivity() {
     fun getPlantOrganImageData() {
 
         val plantsOrganList: ArrayList<PlantOrganImageData> = ArrayList<PlantOrganImageData>()
-        db.collection("Plant_Organ")
-            .get()
-            .addOnSuccessListener { result ->
+        db.collection("Plant_Organ").get().addOnSuccessListener { result ->
 
                 // reading data from firestore
                 for (document in result) {
@@ -244,42 +246,61 @@ class ManagePlantsActivity : AppCompatActivity() {
 
     }
 
+    @SuppressLint("SetTextI18n", "CutPasteId")
     private fun recognisePlant() {
+        // showing Dialog
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_recognise_plant)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.findViewById<TextView>(R.id.txtRecognisingStatus).text = "Searching 391,000+ Species all over the World..."
 
         if(!imagesList.isEmpty() && !organsList.isEmpty()) {
 
             plantOrganImageViewModel.getPlantIdentificationData(imagesList,organsList).observe(this, Observer {
 
-                for(result in it.results) {
+                dialog.findViewById<TextView>(R.id.txtRecognisingStatus).visibility = View.GONE
+                dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).visibility = View.VISIBLE
+
+                dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).setAnimation(R.raw.success_anim)
+                dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).playAnimation()
+                dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).loop(false)
+
+
+                dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).text = spannableString("Recognised as " + it.results[0].species.scientificName + " with " + "%.2f".format(it.results[0].score.toFloat()*100) + "% accuracy",14,(14+it.results[0].species.scientificName.length))
+
+                /* for(result in it.results) {
                     // displaying all lists
                 }
+*/
+               // AppPreferences.showToast(this, it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score)
 
-                AppPreferences.showToast(this, it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score)
 
-                spannableString("Recognised as " + it.results[0].species.scientificName + " with " + it.results[0].score + " accuracy",14,(14+it.results[0].species.scientificName.length))
-
-                txtPlantName.text = it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score
+                //txtPlantName.text = it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score
 
             })
 
+            dialog.findViewById<Button>(R.id.btnAddPlant).setOnClickListener { startActivity(Intent(this,MainActivity::class.java)) }
 
-
+            dialog.show()
 
         } else {
             AppPreferences.showToast(this,"Something wrong Occurred! Please try again")
         }
 
-
-
     }
 
     private fun spannableString(text: String, start: Int, end: Int): SpannableString? {
         val spannableString = SpannableString(text)
-        val redColor = ColorStateList(arrayOf(intArrayOf()), intArrayOf(-0x5ef6ff))
-        val highlightSpan = TextAppearanceSpan(null, Typeface.BOLD, -1, redColor, null)
+       // val redColor = ColorStateList(arrayOf(intArrayOf()), intArrayOf(-0x25645E))
+        val greenColor = ColorStateList.valueOf(resources.getColor(R.color.greenVar2))
+        val highlightSpan = TextAppearanceSpan(null, Typeface.BOLD, -1, greenColor, null)
         spannableString.setSpan(highlightSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         //spannableString.setSpan(BackgroundColorSpan(-0x300b8), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return spannableString
     }
+
+
 
 }
