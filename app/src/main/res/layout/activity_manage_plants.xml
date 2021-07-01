@@ -9,6 +9,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:id="@+id/nestedScroll"
         android:layout_height="wrap_content">
 
         <RelativeLayout
@@ -20,6 +21,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginBottom="0dp"
+                android:background="@drawable/bottom_rounded_circle"
                 android:backgroundTint="@color/light_green"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
@@ -54,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/greenVar2"
                     android:layout_centerVertical="true"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="5dp"
                     android:textSize="20sp"
                     android:layout_marginStart="5dp"
                     android:textStyle="normal"
@@ -88,6 +90,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
+                android:visibility="gone"
                 android:id="@+id/divider"
                 android:background="@color/greenVar2"
                 android:layout_below="@id/parentRelative" />
@@ -99,7 +102,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:id="@+id/plantsRecycler"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,31 +113,31 @@
                 android:padding="10dp"
                 android:id="@+id/txtPlantName"
                 android:textSize="18sp"
+                android:visibility="gone"
                 android:layout_below="@id/plantsRecycler" />
 
-
-
         </RelativeLayout>
-
-
     </androidx.core.widget.NestedScrollView>
 
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_alignParentStart="true"
-        android:textAllCaps="false"
-        android:id="@+id/recognizePlant"
-        android:textSize="18sp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="Add Plant to My Garden"
-        android:layout_marginTop="15dp"
-        android:layout_alignParentBottom="true" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentStart="true"
+            android:textAllCaps="false"
+            android:id="@+id/recognizePlant"
+            android:textSize="18sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="Recognise the Plant"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentBottom="true" />
+
+    <!--Plant loading anim
+    https://assets10.lottiefiles.com/packages/lf20_Bom6gU.json-->
 
 
 

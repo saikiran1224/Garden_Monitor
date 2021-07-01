@@ -2,26 +2,25 @@ package com.kirandroid.gardenmonitor.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.BackgroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.TextAppearanceSpan
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.FirebaseApp
-import com.google.firebase.appcheck.FirebaseAppCheck
-import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -32,12 +31,11 @@ import com.google.firebase.storage.ktx.storage
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.adapters.PlantOrganImageAdapter
 import com.kirandroid.gardenmonitor.models.PlantOrganImageData
-import com.kirandroid.gardenmonitor.responses.PlantIdentificationResponse
 import com.kirandroid.gardenmonitor.utils.AppPreferences
 import com.kirandroid.gardenmonitor.utils.AppUtils
 import com.kirandroid.gardenmonitor.viewmodels.PlantOrganImageViewModel
 import kotlinx.android.synthetic.main.activity_manage_plants.*
-import kotlinx.android.synthetic.main.dialog_show_selected_image.*
+import kotlin.math.roundToInt
 
 
 /*
@@ -70,6 +68,9 @@ class ManagePlantsActivity : AppCompatActivity() {
     lateinit var imagesList: ArrayList<String>
     lateinit var organsList: ArrayList<String>
 
+    lateinit var uploadingLottieAnimLayout: LinearLayout
+    lateinit var txtUploadingPercentage: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_plants)
@@ -101,7 +102,7 @@ class ManagePlantsActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("CutPasteId")
+    @SuppressLint("CutPasteId", "SetTextI18n")
     fun showCustomDialog(stringURIExtra: String) {
 
         val selectedImageURI: Uri = Uri.parse(stringURIExtra)
@@ -111,6 +112,10 @@ class ManagePlantsActivity : AppCompatActivity() {
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
+        //Animation Related
+        uploadingLottieAnimLayout = dialog.findViewById(R.id.uploadingAnimLayout)
+        txtUploadingPercentage = dialog.findViewById(R.id.txtUploadingPercentage)
+
 
         // setting the Image
         dialog.findViewById<ImageView>(R.id.selectedImageView).setImageURI(selectedImageURI)
@@ -130,6 +135,7 @@ class ManagePlantsActivity : AppCompatActivity() {
             //retrieving the selected chip
             val checkedChipId = dialog.findViewById<ChipGroup>(R.id.chipGroup).checkedChipId // Returns View.NO_ID if singleSelection = false
 
+
             // checking whether the user selected one chip
             if (!checkedChipId.equals(View.NO_ID)) {
 
@@ -147,11 +153,22 @@ class ManagePlantsActivity : AppCompatActivity() {
                 }.addOnProgressListener {
                     val progress = (100.0* it.bytesTransferred) / it.totalByteCount
 
+                    // disabling the chiplayout, txtSelectChip and Button Layout
+                    dialog.findViewById<TextView>(R.id.txtOrgan).visibility = View.GONE
+                    dialog.findViewById<ChipGroup>(R.id.chipGroup).visibility = View.GONE
+                    dialog.findViewById<LinearLayout>(R.id.buttonLayout).visibility = View.GONE
+
+                    // show loadinganimLayout
+                    uploadingLottieAnimLayout.visibility = View.VISIBLE
+                    txtUploadingPercentage.text = progress.roundToInt().toString() + "%"
+
+
                     Log.d("TAG", "Upload is $progress% done")
                 }.continueWithTask {
                     if (!it.isSuccessful) {
                         it.exception?.let {
                             throw it
+                            AppPreferences.showToast(this,it.localizedMessage)
                         }
                     }
                     imagesRef.downloadUrl
@@ -239,6 +256,8 @@ class ManagePlantsActivity : AppCompatActivity() {
 
                 AppPreferences.showToast(this, it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score)
 
+                spannableString("Recognised as " + it.results[0].species.scientificName + " with " + it.results[0].score + " accuracy",14,(14+it.results[0].species.scientificName.length))
+
                 txtPlantName.text = it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score
 
             })
@@ -252,6 +271,15 @@ class ManagePlantsActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun spannableString(text: String, start: Int, end: Int): SpannableString? {
+        val spannableString = SpannableString(text)
+        val redColor = ColorStateList(arrayOf(intArrayOf()), intArrayOf(-0x5ef6ff))
+        val highlightSpan = TextAppearanceSpan(null, Typeface.BOLD, -1, redColor, null)
+        spannableString.setSpan(highlightSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        //spannableString.setSpan(BackgroundColorSpan(-0x300b8), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return spannableString
     }
 
 }
