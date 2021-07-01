@@ -2,6 +2,7 @@ package com.kirandroid.gardenmonitor.activities
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.app.SearchManager
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Typeface
@@ -9,8 +10,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.BackgroundColorSpan
-import android.text.style.RelativeSizeSpan
 import android.text.style.TextAppearanceSpan
 import android.util.Log
 import android.view.View
@@ -32,13 +31,12 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.adapters.PlantOrganImageAdapter
+import com.kirandroid.gardenmonitor.models.PlantData
 import com.kirandroid.gardenmonitor.models.PlantOrganImageData
 import com.kirandroid.gardenmonitor.utils.AppPreferences
 import com.kirandroid.gardenmonitor.utils.AppUtils
 import com.kirandroid.gardenmonitor.viewmodels.PlantOrganImageViewModel
 import kotlinx.android.synthetic.main.activity_manage_plants.*
-import org.w3c.dom.Text
-import java.math.RoundingMode
 import kotlin.math.roundToInt
 
 
@@ -214,6 +212,7 @@ class ManagePlantsActivity : AppCompatActivity() {
                 for (document in result) {
                     val plantOrganImageData = document.toObject<PlantOrganImageData>()
                     plantsOrganList.add(plantOrganImageData)
+
                     imagesList.add(plantOrganImageData.plantOrganUrl)
                     organsList.add(plantOrganImageData.organName.lowercase())
 
@@ -260,6 +259,12 @@ class ManagePlantsActivity : AppCompatActivity() {
 
             plantOrganImageViewModel.getPlantIdentificationData(imagesList,organsList).observe(this, Observer {
 
+                dialog.findViewById<LinearLayout>(R.id.buttonLayout).visibility = View.VISIBLE
+
+                val scientificName = it.results[0].species.scientificName.toString()
+                val accuracy = "%.2f".format(it.results[0].score.toFloat()*100)
+                val plantImageUrl = it.results[0].images[0].url.m
+
                 dialog.findViewById<TextView>(R.id.txtRecognisingStatus).visibility = View.GONE
                 dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).visibility = View.VISIBLE
 
@@ -269,6 +274,19 @@ class ManagePlantsActivity : AppCompatActivity() {
 
 
                 dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).text = spannableString("Recognised as " + it.results[0].species.scientificName + " with " + "%.2f".format(it.results[0].score.toFloat()*100) + "% accuracy",14,(14+it.results[0].species.scientificName.length))
+
+
+
+                dialog.findViewById<Button>(R.id.btnSearchGoogle).setOnClickListener {
+                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
+                    intent.putExtra(SearchManager.QUERY, "https://www.google.com/search?q="+scientificName) // query contains search string
+                    startActivity(intent)
+                }
+
+                dialog.findViewById<Button>(R.id.btnAddPlant).setOnClickListener{
+                    addPlantToMyGarden(scientificName,accuracy,plantImageUrl)
+                    startActivity(Intent(this,MainActivity::class.java))
+                }
 
                 /* for(result in it.results) {
                     // displaying all lists
@@ -281,7 +299,8 @@ class ManagePlantsActivity : AppCompatActivity() {
 
             })
 
-            dialog.findViewById<Button>(R.id.btnAddPlant).setOnClickListener { startActivity(Intent(this,MainActivity::class.java)) }
+
+
 
             dialog.show()
 
@@ -289,6 +308,31 @@ class ManagePlantsActivity : AppCompatActivity() {
             AppPreferences.showToast(this,"Something wrong Occurred! Please try again")
         }
 
+    }
+
+    private fun addPlantToMyGarden(scientificName: String, accuracy: String, imageurl: String) {
+
+        val plantData: PlantData = PlantData(scientificName,imageurl,accuracy,AppUtils.getCurrentDate(),AppUtils.getCurrentTime())
+
+        // deleting data from Firestore
+        db.collection("Plant_Organ").get().addOnSuccessListener {
+            result ->
+              for(document in result) {
+                  // deleting each document in collection of Plant_Organ
+                  db.collection("Plant_Organ").document(document.id).delete().addOnFailureListener {
+                      AppPreferences.showToast(this,it.localizedMessage)
+                  }
+              }
+        }
+
+        // adding Data to My Garden Database
+        db.collection("My_Garden")
+            .add(plantData)
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(this, "Success! Plant added to My Garden!", Toast.LENGTH_LONG).show()
+            }.addOnFailureListener { error ->
+                Toast.makeText(this, "Error adding plant: $error", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun spannableString(text: String, start: Int, end: Int): SpannableString? {

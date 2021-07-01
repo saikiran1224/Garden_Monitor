@@ -58,7 +58,7 @@
             android:layout_marginBottom="20dp"
             android:id="@+id/edtSearch"
             android:background="@drawable/rounded_bg"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginEnd="20dp"
             android:drawableTint="@color/greenVar2"
             android:drawableStart="@drawable/ic_baseline_search_24"
@@ -69,6 +69,7 @@
             android:layout_height="300dp"
             android:layout_marginTop="30dp"
             app:lottie_autoPlay="true"
+            android:visibility="gone"
             android:scaleType="centerCrop"
             android:padding="25dp"
             app:lottie_loop="true"
@@ -83,7 +84,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/noDataAnim"
+            android:visibility="gone"
             android:layout_centerHorizontal="true"
+            android:id="@+id/txtNoData"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="25dp"
             android:gravity="center"
@@ -91,6 +94,15 @@
             android:textColor="@color/greenVar2"
             android:text="Please click on Scan Button and add your Plants here" />
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtSearch"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="0dp"
+            android:id="@+id/plantsRecycler"/>
 
 
 

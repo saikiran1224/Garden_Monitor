@@ -34,6 +34,11 @@ class ScanPlantsActivity : AppCompatActivity() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+    val REQUEST_CODE_DOC : Int = 0
+
+    lateinit var fileUri: Uri
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,16 +63,33 @@ class ScanPlantsActivity : AppCompatActivity() {
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-
-
+        btnSelectFromGallery.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            //intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.type = "image/*"
+            startActivityForResult(Intent.createChooser(intent, "ChooseFile"), REQUEST_CODE_DOC)
+        }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            fileUri = data!!.data!!
+
+            // passing Intent to show selected Picture
+            val intent = Intent(this@ScanPlantsActivity, ManagePlantsActivity::class.java)
+            intent.putExtra("imageURI", fileUri.toString())
+            intent.putExtra("image_source","File_Manager")
+            startActivity(intent)
+
+        }
+    }
+
 
     private fun takePhoto() {
 
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture
-
-
 
         // Create time-stamped output file to hold the image
         val photoFile = File(
@@ -89,13 +111,10 @@ class ScanPlantsActivity : AppCompatActivity() {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
-
                     val intent = Intent(this@ScanPlantsActivity, ManagePlantsActivity::class.java)
                     intent.putExtra("imageURI", savedUri.toString())
                     intent.putExtra("image_source","Camera")
                     startActivity(intent)
-
-
                     val msg = "Photo capture succeeded: $savedUri"
                    // Toast.makeText(this@ScanPlantsActivity, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
