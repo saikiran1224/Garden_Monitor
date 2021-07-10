@@ -18,11 +18,6 @@ object AppPreferences {
     private val CUST_ADDRESS = Pair("custAddress","")
     private val CUST_PHONE = Pair("custPhone","")
 
-    private val X1_VAL = Pair("x1_val",0)
-    private val Y1_VAL = Pair("y1_val",0)
-    private val WIDTH = Pair("width",0)
-    private val HEIGHT = Pair("height",0)
-
 
     fun init(context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)
@@ -76,32 +71,5 @@ object AppPreferences {
         set(value) = preferences.edit {
             it.putString(CUST_PHONE.first, value)
         }
-
-    var x1Value: Int?
-        get() = preferences.getInt(X1_VAL.first, X1_VAL.second)
-        set(value) = preferences.edit {
-            it.putInt(X1_VAL.first, value!!)
-        }
-
-    var y1Value: Int?
-        get() = preferences.getInt(Y1_VAL.first, Y1_VAL.second)
-        set(value) = preferences.edit {
-            it.putInt(Y1_VAL.first, value!!)
-        }
-
-    var width: Int?
-        get() = preferences.getInt(WIDTH.first, WIDTH.second)
-        set(value) = preferences.edit {
-            it.putInt(WIDTH.first, value!!)
-        }
-
-    var height: Int?
-        get() = preferences.getInt(HEIGHT.first, HEIGHT.second)
-        set(value) = preferences.edit {
-            it.putInt(HEIGHT.first, value!!)
-        }
-
-
-
 
 }

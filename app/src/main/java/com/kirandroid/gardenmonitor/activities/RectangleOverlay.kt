@@ -65,13 +65,6 @@ class RectangleOverlay : LinearLayout {
         val y2 = height / 2 + heightDiff / 2
         val rect = RectF(x1, y1, x2, y2)
 
-        //setting the bounds of the phone capture
-        AppPreferences.x1Value = x1.toInt()
-        AppPreferences.y1Value = y1.toInt()
-        AppPreferences.width = x2.toInt()
-        AppPreferences.height = y2.toInt()
-
-
        // Toast.makeText(context,"x1: " + x1.toString() + " y1: "+y1.toString() + " Width: "+ (x2-x1) + " Height: " + (y2-y1),Toast.LENGTH_LONG).show()
 
         osCanvas.drawRoundRect(rect, 5F, 5F, paint)

@@ -26,7 +26,6 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-
 class ScanPlantsActivity : AppCompatActivity() {
 
     private var imageCapture: ImageCapture? = null
@@ -115,10 +114,7 @@ class ScanPlantsActivity : AppCompatActivity() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val intent = Intent(this@ScanPlantsActivity, ManagePlantsActivity::class.java)
-
-                    Toast.makeText(this@ScanPlantsActivity,AppPreferences.width.toString(),Toast.LENGTH_LONG).show()
-
-                    intent.putExtra("imageUri", savedUri.toString())
+                    intent.putExtra("imageURI", savedUri.toString())
                     intent.putExtra("image_source","Camera")
                     startActivity(intent)
                     val msg = "Photo capture succeeded: $savedUri"

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -96,7 +97,7 @@ class ManagePlantsActivity : AppCompatActivity() {
         val intent = intent
         if (!intent.getStringExtra("image_source")!!.isEmpty()) {
             // intent is passed show dialog
-            showCustomDialog(intent.getStringExtra("imageUri")!!)
+            showCustomDialog(intent.getStringExtra("imageURI")!!)
         }
 
         // initialising Cloud Firestore
@@ -232,14 +233,15 @@ class ManagePlantsActivity : AppCompatActivity() {
                 }
 
                 // disabling and enabling the button
-                if (!plantsOrganList.isEmpty() && plantsOrganList.size < 4) {
+                if (!plantsOrganList.isEmpty() && plantsOrganList.size == 1) {
                     recognizePlant.isEnabled = false
+                    startActivity(Intent(this,MainActivity::class.java))
                 }
 
                 // initialising the adapter
                 if (!plantsOrganList.isEmpty()) {
                     val plantOrganImageAdapter = PlantOrganImageAdapter(this, plantsOrganList)
-                    val gridLayoutManager = GridLayoutManager(this, 2)
+                    val gridLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
                     plantsRecycler.adapter = plantOrganImageAdapter
                     plantsRecycler.layoutManager = gridLayoutManager
                 } else {
@@ -268,7 +270,7 @@ class ManagePlantsActivity : AppCompatActivity() {
 
                 dialog.findViewById<LinearLayout>(R.id.buttonLayout).visibility = View.VISIBLE
 
-                val scientificName = it.results[0].species.scientificName.toString()
+                val scientificName = it.results[0].species.commonNames[0].toString()
                 val accuracy = "%.2f".format(it.results[0].score.toFloat()*100)
                 val plantImageUrl = it.results[0].images[0].url.m
 
@@ -279,15 +281,10 @@ class ManagePlantsActivity : AppCompatActivity() {
                 dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).playAnimation()
                 dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).loop(false)
 
-
                 dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).text = spannableString("Recognised as " + it.results[0].species.scientificName + " with " + "%.2f".format(it.results[0].score.toFloat()*100) + "% accuracy",14,(14+it.results[0].species.scientificName.length))
 
-
-
                 dialog.findViewById<Button>(R.id.btnSearchGoogle).setOnClickListener {
-                    val intent = Intent(Intent.ACTION_WEB_SEARCH)
-                    intent.putExtra(SearchManager.QUERY, "https://www.google.com/search?q="+scientificName) // query contains search string
-                    startActivity(intent)
+                  dialog.dismiss()
                 }
 
                 dialog.findViewById<Button>(R.id.btnAddPlant).setOnClickListener{

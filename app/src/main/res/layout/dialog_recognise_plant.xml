@@ -77,7 +77,7 @@
                 android:layout_marginEnd="8dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_weight="0.5"
-                android:text="Google Search" />
+                android:text="Cancel" />
 
             <Button
                 android:layout_width="wrap_content"

@@ -31,6 +31,8 @@ class PlantAdapter(private val context: Context, private val plantsList: ArrayLi
         holder.plantDate.setText(plantsList.get(position).date)
         holder.plantName.setText(plantsList.get(position).plantScientificName)
 
+        holder.plantName.isSelected = true
+
     }
 
     override fun getItemCount(): Int {
