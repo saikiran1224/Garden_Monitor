@@ -1,13 +1,16 @@
 package com.kirandroid.gardenmonitor.activities
 
+import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.SearchManager
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
@@ -37,6 +40,7 @@ import com.kirandroid.gardenmonitor.utils.AppPreferences
 import com.kirandroid.gardenmonitor.utils.AppUtils
 import com.kirandroid.gardenmonitor.viewmodels.PlantOrganImageViewModel
 import kotlinx.android.synthetic.main.activity_manage_plants.*
+import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
 
 
@@ -73,6 +77,9 @@ class ManagePlantsActivity : AppCompatActivity() {
     lateinit var uploadingLottieAnimLayout: LinearLayout
     lateinit var txtUploadingPercentage: TextView
 
+    lateinit var bitmap: Bitmap
+    lateinit var scaledBitmap: Bitmap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_plants)
@@ -89,7 +96,7 @@ class ManagePlantsActivity : AppCompatActivity() {
         val intent = intent
         if (!intent.getStringExtra("image_source")!!.isEmpty()) {
             // intent is passed show dialog
-            showCustomDialog(intent.getStringExtra("imageURI")!!)
+            showCustomDialog(intent.getStringExtra("imageUri")!!)
         }
 
         // initialising Cloud Firestore
@@ -118,7 +125,6 @@ class ManagePlantsActivity : AppCompatActivity() {
         uploadingLottieAnimLayout = dialog.findViewById(R.id.uploadingAnimLayout)
         txtUploadingPercentage = dialog.findViewById(R.id.txtUploadingPercentage)
 
-
         // setting the Image
         dialog.findViewById<ImageView>(R.id.selectedImageView).setImageURI(selectedImageURI)
 
@@ -144,10 +150,11 @@ class ManagePlantsActivity : AppCompatActivity() {
                 val chip = dialog.findViewById<ChipGroup>(R.id.chipGroup).findViewById<Chip>(checkedChipId)
 
                 // Uploading File to Storage
-
                 // creating folder with Current Date and Time
-                val imagesRef: StorageReference? = storageRef.child("${AppUtils.getCurrentDate()}/${chip.text.toString()+" "+AppUtils.getCurrentTime()}")
-                val uploadTask = imagesRef!!.putFile(selectedImageURI)
+                val imagesRef: StorageReference = storageRef.child("${AppUtils.getCurrentDate()}/${chip.text.toString()+" "+AppUtils.getCurrentTime()}")
+
+                // starting the uploadTask
+                val uploadTask = imagesRef.putFile(selectedImageURI)
                 var imageUrl = ""
                 uploadTask.addOnSuccessListener { taskSnapshot ->
                     // file size
@@ -298,9 +305,6 @@ class ManagePlantsActivity : AppCompatActivity() {
                 //txtPlantName.text = it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score
 
             })
-
-
-
 
             dialog.show()
 

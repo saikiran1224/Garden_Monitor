@@ -6,56 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activities.ScanPlantsActivity">
 
-
-
-
-<!--
-    <Button
-        android:id="@+id/camera_capture_button"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:visibility="visible"
-        android:layout_marginBottom="50dp"
-        android:scaleType="fitCenter"
-        android:text="Take Photo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:elevation="2dp" />
--->
-
-    <ImageView
-        android:id="@+id/camera_capture_button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:visibility="visible"
-        android:background="@drawable/circle_bg"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:layout_marginBottom="10dp"
-        android:alpha="1"
-        android:padding="15dp"
-        android:backgroundTint="@color/light_green"
-        app:layout_constraintBottom_toTopOf="@id/txtOr"
-        android:src="@drawable/scanner"
-        app:tint="@color/greenVar2"
-        android:scaleType="fitCenter"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:elevation="2dp" />
-
-
-
-
-
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
-    <com.kirandroid.gardenmonitor.activities.RectangleOverlay
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -113,7 +65,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:clickable="true"
-            android:id="@+id/flashLight"
+            android:visibility="gone"
             tools:targetApi="m"
             app:tint="@color/greenVar2"
             android:focusable="true"
@@ -129,39 +81,64 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Or"
-        android:textSize="16sp"
-        android:id="@+id/txtOr"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/btnSelectFromGallery"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/white"
+    <androidx.cardview.widget.CardView
+        android:layout_width="290dp"
+        android:layout_height="70dp"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent">
 
-    <Button
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:textColor="@color/greenVar2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="20dp"
-        android:padding="10dp"
-        android:textStyle="normal"
-        android:id="@+id/btnSelectFromGallery"
-        android:text="Select from Gallery"
-        android:backgroundTint="@color/light_green"
-        android:textSize="16sp"
-        android:textAllCaps="false"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:elevation="2dp"
-        android:focusableInTouchMode="false"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/light_green"
+            android:layout_height="match_parent">
 
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_camera_24"
+                app:tint="@color/greenVar2"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/camera_capture_button"
+                android:foreground="?attr/selectableItemBackground"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                tools:targetApi="m" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_flash_off_24"
+                app:tint="@color/greenVar2"
+                android:clickable="true"
+                android:focusable="true"
+                tools:targetApi="m"
+                android:id="@+id/flashLight"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="25dp"
+                android:layout_alignParentStart="true" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                tools:targetApi="m"
+                android:id="@+id/btnSelectFromGallery"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_baseline_photo_library_24"
+                app:tint="@color/greenVar2"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="25dp"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,14 +3,13 @@ package com.kirandroid.gardenmonitor.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
+import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -19,6 +18,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.kirandroid.gardenmonitor.R
+import com.kirandroid.gardenmonitor.utils.AppPreferences
 import kotlinx.android.synthetic.main.activity_scan_plants.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -46,6 +46,9 @@ class ScanPlantsActivity : AppCompatActivity() {
 
        // requestWindowFeature(Window.FEATURE_NO_TITLE);
       //  window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // initialising App Preferences
+        AppPreferences.init(this)
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -112,7 +115,10 @@ class ScanPlantsActivity : AppCompatActivity() {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
                     val intent = Intent(this@ScanPlantsActivity, ManagePlantsActivity::class.java)
-                    intent.putExtra("imageURI", savedUri.toString())
+
+                    Toast.makeText(this@ScanPlantsActivity,AppPreferences.width.toString(),Toast.LENGTH_LONG).show()
+
+                    intent.putExtra("imageUri", savedUri.toString())
                     intent.putExtra("image_source","Camera")
                     startActivity(intent)
                     val msg = "Photo capture succeeded: $savedUri"
