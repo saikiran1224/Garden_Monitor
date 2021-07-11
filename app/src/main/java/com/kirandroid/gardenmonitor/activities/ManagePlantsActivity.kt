@@ -1,16 +1,13 @@
 package com.kirandroid.gardenmonitor.activities
 
-import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.app.SearchManager
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.TextAppearanceSpan
@@ -20,7 +17,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.chip.Chip
@@ -41,7 +37,7 @@ import com.kirandroid.gardenmonitor.utils.AppPreferences
 import com.kirandroid.gardenmonitor.utils.AppUtils
 import com.kirandroid.gardenmonitor.viewmodels.PlantOrganImageViewModel
 import kotlinx.android.synthetic.main.activity_manage_plants.*
-import java.io.ByteArrayOutputStream
+import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
 
@@ -91,6 +87,7 @@ class ManagePlantsActivity : AppCompatActivity() {
         // initialising App Preferences
         AppPreferences.init(this)
 
+
         imagesList = ArrayList()
         organsList = ArrayList()
 
@@ -108,6 +105,50 @@ class ManagePlantsActivity : AppCompatActivity() {
 
         recognizePlant.setOnClickListener { recognisePlant() }
 
+
+        infoIcon.setOnClickListener { showInfoMessage() }
+
+
+    }
+
+    // function for showing Info Message dialog
+    @SuppressLint("SetTextI18n")
+    fun showInfoMessage() {
+
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_info_message)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialog.findViewById<Button>(R.id.btnThanks).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // setting Animation
+        dialog.findViewById<LottieAnimationView>(R.id.lottieAnim).setAnimation(R.raw.info_animation)
+        dialog.findViewById<LottieAnimationView>(R.id.lottieAnim).playAnimation()
+
+        // setting Info Message
+        dialog.findViewById<TextView>(R.id.txtMessage).text = "We recommend you to add minimum 3 plant organs and a Maximum of 5 plant organs for better recognition of Plant."
+
+        dialog.show()
+
+    }
+
+    // function to show Error if accuracy is <25%
+    @SuppressLint("SetTextI18n")
+    fun showErrorMessage() {
+
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_error_message)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+
+        dialog.findViewById<Button>(R.id.btnThanks).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
 
     }
 
@@ -232,6 +273,10 @@ class ManagePlantsActivity : AppCompatActivity() {
                     plantsOrganList.add(PlantOrganImageData("imageURL", "addImage", "Date"))
                 }
 
+                if(plantsOrganList.size == 2) {
+                    showInfoMessage()
+                }
+
                 // disabling and enabling the button
                 if (!plantsOrganList.isEmpty() && plantsOrganList.size == 1) {
                     recognizePlant.isEnabled = false
@@ -264,48 +309,67 @@ class ManagePlantsActivity : AppCompatActivity() {
         dialog.setCancelable(false)
         dialog.findViewById<TextView>(R.id.txtRecognisingStatus).text = "Searching 391,000+ Species all over the World..."
 
+        dialog.show()
         if(!imagesList.isEmpty() && !organsList.isEmpty()) {
+
+            // calculating Start Time
+            val startTime =   System.nanoTime()
+
 
             plantOrganImageViewModel.getPlantIdentificationData(imagesList,organsList).observe(this, Observer {
 
-                dialog.findViewById<LinearLayout>(R.id.buttonLayout).visibility = View.VISIBLE
+
+                val elapsedTime = System.nanoTime() - startTime
+
+                val elapsedTimeInSeconds = TimeUnit.MILLISECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS) / 1000.0
+
+                AppPreferences.showToast(this,"Time Taken to show response: " + elapsedTimeInSeconds.toString() + " seconds")
+
 
                 val scientificName = it.results[0].species.commonNames[0].toString()
+                val floatAccuracy = it.results[0].score.toFloat()*100
                 val accuracy = "%.2f".format(it.results[0].score.toFloat()*100)
                 val plantImageUrl = it.results[0].images[0].url.m
 
-                dialog.findViewById<TextView>(R.id.txtRecognisingStatus).visibility = View.GONE
-                dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).visibility = View.VISIBLE
 
-                dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).setAnimation(R.raw.success_anim)
-                dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).playAnimation()
-                dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).loop(false)
+                // checking whether the accuracy is more than 25%
+                if(floatAccuracy > 25.0) {
 
-                dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).text = spannableString("Recognised as " + it.results[0].species.scientificName + " with " + "%.2f".format(it.results[0].score.toFloat()*100) + "% accuracy",14,(14+it.results[0].species.scientificName.length))
+                    // showing Success message
+                    dialog.findViewById<LinearLayout>(R.id.buttonLayout).visibility = View.VISIBLE
 
-                dialog.findViewById<Button>(R.id.btnSearchGoogle).setOnClickListener {
-                  dialog.dismiss()
+                    dialog.findViewById<TextView>(R.id.txtRecognisingStatus).visibility = View.GONE
+                    dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).visibility = View.VISIBLE
+
+                    dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).setAnimation(R.raw.success_anim)
+                    dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).playAnimation()
+                    dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).loop(false)
+
+                    dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).text = spannableString("Recognised as " + it.results[0].species.scientificName + " with " + "%.2f".format(it.results[0].score.toFloat() * 100) + "% accuracy", 14, (14 + it.results[0].species.scientificName.length))
+
+                    dialog.findViewById<Button>(R.id.btnSearchGoogle).setOnClickListener {
+                        dialog.dismiss()
+                    }
+
+                    dialog.findViewById<Button>(R.id.btnAddPlant).setOnClickListener {
+                        addPlantToMyGarden(scientificName, accuracy, plantImageUrl)
+                        startActivity(Intent(this, MainActivity::class.java))
+                    }
+
+                    dialog.show()
+
+                } else {
+
+                    dialog.dismiss()
+                    // showing Error Message
+                    showErrorMessage()
+
                 }
-
-                dialog.findViewById<Button>(R.id.btnAddPlant).setOnClickListener{
-                    addPlantToMyGarden(scientificName,accuracy,plantImageUrl)
-                    startActivity(Intent(this,MainActivity::class.java))
-                }
-
-                /* for(result in it.results) {
-                    // displaying all lists
-                }
-*/
-               // AppPreferences.showToast(this, it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score)
-
-
-                //txtPlantName.text = it.results[0].species.scientificName + " is recognised with Confidence Score of " + it.results[0].score
-
             })
 
-            dialog.show()
-
         } else {
+
+            showErrorMessage()
             AppPreferences.showToast(this,"Something wrong Occurred! Please try again")
         }
 

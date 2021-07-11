@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="5dp"
+    app:cardPreventCornerOverlap="false"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="320dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="180dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            app:lottie_rawRes="@raw/error_animation"
+            android:layout_marginTop="15dp"
+            app:lottie_autoPlay="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/lottieAnim"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lottieAnim"
+            android:visibility="visible"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/greenVar2"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:text="Uh-oh! Unable to identify Plant"
+            android:id="@+id/txtMessage" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lottieAnim"
+            android:visibility="visible"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:textSize="13sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:text="Please check whether the image(s) are plant related or Upload some more plant Organs to improve Accuracy"
+            android:id="@+id/txtSupportingMessage" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="0dp"
+            android:weightSum="2"
+            android:layout_marginTop="15dp"
+            android:visibility="visible"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/buttonLayout"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:layout_below="@id/txtMessageAfterRecognised"
+                android:textAllCaps="false"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center_horizontal"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/btnThanks"
+                android:layout_marginBottom="0dp"
+                android:textSize="15sp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:text="Okay, I will try again!" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.cardview.widget.CardView>
