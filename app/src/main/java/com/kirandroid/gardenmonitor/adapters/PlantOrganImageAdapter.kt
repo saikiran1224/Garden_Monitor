@@ -8,11 +8,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.activities.ScanPlantsActivity
 import com.kirandroid.gardenmonitor.models.PlantOrganImageData
+import com.kirandroid.gardenmonitor.utils.AppPreferences
 
 
 class PlantOrganImageAdapter(private val context: Context, private val plantOrgansList: ArrayList<PlantOrganImageData>):
@@ -45,6 +50,34 @@ class PlantOrganImageAdapter(private val context: Context, private val plantOrga
             Glide.with(context).load(plantOrgansList.get(position).plantOrganUrl).into(holder.organImage)
             holder.txtOrganName.setText(plantOrgansList.get(position).organName.toString())
 
+            // deleting the plant Organ
+            holder.deleteIcon.setOnClickListener {
+
+                // deleting data from Firestore
+                val db = Firebase.firestore
+                db.collection("Plant_Organ").get().addOnSuccessListener {
+                        result ->
+                    // deleting each document in collection of Plant_Organ
+                    db.collection("Plant_Organ").document(result.documents.get(position).id).delete().addOnFailureListener {
+                        AppPreferences.showToast(context, "Deleted Image Successfully! ")
+                    }
+                }
+
+                // deleting data from Firebase Storage
+                val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(plantOrgansList.get(position).plantOrganUrl)
+                storageReference.delete().addOnSuccessListener {
+
+                    plantOrgansList.removeAt(holder.adapterPosition)
+                    notifyItemRemoved(holder.adapterPosition)
+                    notifyItemRangeChanged(holder.adapterPosition, plantOrgansList.size)
+                    holder.itemView.visibility = View.GONE
+                    Toast.makeText(context, "Plant Organ Deleted Successfully !", Toast.LENGTH_LONG).show()
+
+                }.addOnFailureListener{
+                    Toast.makeText(context, "Some Error Occurred. Please try again!!!", Toast.LENGTH_LONG).show()
+                }
+            }
+
             if(plantOrgansList.get(position).organName.equals("Leaf")) {
                 Glide.with(context).load(R.drawable.leaf_icon).into(holder.organIcon)
             } else if(plantOrgansList.get(position).organName.equals("Flower")) {
@@ -66,6 +99,7 @@ class PlantOrganImageAdapter(private val context: Context, private val plantOrga
         val organImage = itemView.findViewById<ImageView>(R.id.imageView)
         val plantOrganImageLayout = itemView.findViewById<RelativeLayout>(R.id.plantOrganLayout)
         val placeholderLayout = itemView.findViewById<RelativeLayout>(R.id.placeHolderLayout)
+        val deleteIcon = itemView.findViewById<ImageView>(R.id.deleteIcon)
 
     }
 

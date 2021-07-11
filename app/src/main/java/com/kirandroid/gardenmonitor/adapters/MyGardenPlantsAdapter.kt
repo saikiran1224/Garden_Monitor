@@ -1,27 +1,22 @@
 package com.kirandroid.gardenmonitor.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kirandroid.gardenmonitor.R
-import com.kirandroid.gardenmonitor.activities.ScanPlantsActivity
 import com.kirandroid.gardenmonitor.models.PlantData
-import com.kirandroid.gardenmonitor.models.PlantOrganImageData
-import org.w3c.dom.Text
 
 
-class PlantAdapter(private val context: Context, private val plantsList: ArrayList<PlantData>):
-    RecyclerView.Adapter<PlantAdapter.ViewHolder>() {
+class MyGardenPlantsAdapter(private val context: Context, private val plantsList: ArrayList<PlantData>):
+    RecyclerView.Adapter<MyGardenPlantsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_plant,parent,false)
+        val  view = LayoutInflater.from(parent.context).inflate(R.layout.layout_my_garden_plant,parent,false)
         return ViewHolder(view)
     }
 

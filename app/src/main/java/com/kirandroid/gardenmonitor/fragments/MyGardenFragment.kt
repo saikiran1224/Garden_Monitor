@@ -15,15 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.initialize
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.activities.ScanPlantsActivity
-import com.kirandroid.gardenmonitor.adapters.PlantAdapter
-import com.kirandroid.gardenmonitor.adapters.PlantOrganImageAdapter
+import com.kirandroid.gardenmonitor.adapters.MyGardenPlantsAdapter
 import com.kirandroid.gardenmonitor.models.PlantData
-import kotlinx.android.synthetic.main.activity_manage_plants.*
-import kotlinx.android.synthetic.main.fragment_my_garden.*
-import kotlinx.android.synthetic.main.fragment_my_garden.plantsRecycler
 import kotlinx.android.synthetic.main.fragment_my_garden.view.*
 
 class MyGardenFragment : Fragment() {
@@ -79,7 +74,7 @@ class MyGardenFragment : Fragment() {
                   txtNoData.visibility = View.GONE
 
                   // initialising adapter
-                  val plantOrganImageAdapter = PlantAdapter(requireContext(), plantsList)
+                  val plantOrganImageAdapter = MyGardenPlantsAdapter(requireContext(), plantsList)
                   val gridLayoutManager = GridLayoutManager(requireContext(), 2)
                   plantsRecyclerView.adapter = plantOrganImageAdapter
                   plantsRecyclerView.layoutManager = gridLayoutManager
