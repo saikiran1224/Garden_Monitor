@@ -8,6 +8,9 @@ object AppUtils {
     private var instance: AppUtils? = null
     const val plantNetApiKey:String = "2b106yy0yLNcCZELH9t9nzUFbO"
 
+    const val plantNetUrl = "https://my-api.plantnet.org/v2/"
+    const val wikiUrl = "https://en.wikipedia.org/api/rest_v1/"
+
 
     fun AppUtils() {
         instance = this

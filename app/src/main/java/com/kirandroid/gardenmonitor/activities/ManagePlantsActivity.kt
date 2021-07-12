@@ -163,6 +163,7 @@ class ManagePlantsActivity : AppCompatActivity() {
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
+
         //Animation Related
         uploadingLottieAnimLayout = dialog.findViewById(R.id.uploadingAnimLayout)
         txtUploadingPercentage = dialog.findViewById(R.id.txtUploadingPercentage)
@@ -212,7 +213,6 @@ class ManagePlantsActivity : AppCompatActivity() {
                     // show loadinganimLayout
                     uploadingLottieAnimLayout.visibility = View.VISIBLE
                     txtUploadingPercentage.text = progress.roundToInt().toString() + "%"
-
 
                     Log.d("TAG", "Upload is $progress% done")
                 }.continueWithTask {
@@ -326,7 +326,8 @@ class ManagePlantsActivity : AppCompatActivity() {
                 AppPreferences.showToast(this,"Time Taken to show response: " + elapsedTimeInSeconds.toString() + " seconds")
 
 
-                val scientificName = it.results[0].species.commonNames[0].toString()
+                val commonName = it.results[0].species.commonNames[0].toString()
+                val scientificName = it.results[0].species.scientificName.toString()
                 val floatAccuracy = it.results[0].score.toFloat()*100
                 val accuracy = "%.2f".format(it.results[0].score.toFloat()*100)
                 val plantImageUrl = it.results[0].images[0].url.m
@@ -352,8 +353,16 @@ class ManagePlantsActivity : AppCompatActivity() {
                     }
 
                     dialog.findViewById<Button>(R.id.btnAddPlant).setOnClickListener {
-                        addPlantToMyGarden(scientificName, accuracy, plantImageUrl)
-                        startActivity(Intent(this, MainActivity::class.java))
+                        //addPlantToMyGarden(scientificName, accuracy, plantImageUrl)
+
+                        // passing Plant Scientific Name to Wiki API to fetch data
+                        val intent = Intent(this,WikiPlantProfileActivity::class.java)
+                        intent.putExtra("plant_name",commonName)
+                        intent.putExtra("scientificName",scientificName)
+                        startActivity(intent)
+
+
+                        //startActivity(Intent(this, MainActivity::class.java))
                     }
 
                     dialog.show()

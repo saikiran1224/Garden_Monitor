@@ -27,7 +27,7 @@ class PlantOrganImageViewModel: ViewModel() {
     // accessing the data received from call and posting the data to LiveData
    fun getPlantIdentificationData(images: ArrayList<String>, organs: ArrayList<String>): MutableLiveData<PlantIdentificationResponse> {
 
-        val apiService: ApiService? = RetrofitUtils.getInstance()
+        val apiService: ApiService? = RetrofitUtils.getInstance(AppUtils.plantNetUrl)!!.create(ApiService::class.java)
         val response: Call<PlantIdentificationResponse?>? = apiService?.PlantIdentificationResponse(images,organs,true,"en", AppUtils.plantNetApiKey)
 
         response!!.enqueue(object : Callback<PlantIdentificationResponse?> {
@@ -36,7 +36,6 @@ class PlantOrganImageViewModel: ViewModel() {
                 if (response.isSuccessful() && response.body() != null) {
                     val res = response.body()
                     plantIdentificationDataList.postValue(res)
-
 
                 } else {
                     Log.d("Res","Inside " + plantIdentificationDataList)

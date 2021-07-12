@@ -73,6 +73,7 @@
                 android:layout_marginStart="5dp"
                 android:id="@+id/btnSearchGoogle"
                 android:textAllCaps="false"
+                android:visibility="gone"
                 android:drawablePadding="8dp"
                 android:layout_marginEnd="8dp"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
@@ -93,7 +94,7 @@
                 android:textSize="15sp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
-                android:text="Add Plant" />
+                android:text="View Plant Details" />
 
         </LinearLayout>
 

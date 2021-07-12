@@ -1,13 +1,16 @@
 package com.kirandroid.gardenmonitor.retrofit
 
 import com.kirandroid.gardenmonitor.BuildConfig
-import com.kirandroid.gardenmonitor.retrofit.ApiService
+/*
+import jdk.nashorn.internal.runtime.Source.baseURL
+*/
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 object RetrofitUtils {
 
@@ -16,14 +19,47 @@ object RetrofitUtils {
     private val isDebugging: Boolean = BuildConfig.DEBUG
     private var retrofit: Retrofit? = null
 
-    fun getInstance(): ApiService? {
-        if (retrofit == null) retrofit = Retrofit.Builder()
+   /* fun getInstance(): Retrofit? {
+        if (retrofit == null)
+
+            retrofit = Retrofit.Builder()
             .baseUrl("https://my-api.plantnet.org/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(getHttpClient())
             .build()
-        return retrofit!!.create(ApiService::class.java)
+        return retrofit!!
     }
+
+    fun getWikiInstance(): Retrofit? {
+        if (retrofit == null)
+
+            retrofit = Retrofit.Builder()
+                .baseUrl("https://en.wikipedia.org/api/rest_v1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(getHttpClient())
+                .build()
+        return retrofit!!
+    }*/
+
+    fun getInstance(baseURL: String):Retrofit? {
+        if (retrofit == null) {
+            retrofit = Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(getHttpClient())
+                .build()
+        } else {
+            if (!retrofit!!.baseUrl().equals(baseURL)) {
+                retrofit = Retrofit.Builder()
+                    .baseUrl(baseURL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(getHttpClient())
+                    .build()
+            }
+        }
+        return retrofit
+    }
+
 
     private fun getHttpClient(): OkHttpClient? {
         return getHttpClient(null)
@@ -41,5 +77,8 @@ object RetrofitUtils {
         }
         return httpClient.build()
     }
+
+
+
 
 }

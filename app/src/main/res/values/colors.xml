@@ -21,9 +21,13 @@
 
     <color name="grey">#54CFCECE</color>
 
+    <color name="pureGrey">#56CFCECE</color>
+
+    <color name="greenAlpha">#1725645E</color>
+
+
     <color name="qr_code_reader_square">#FFFFFFFF</color>
 
-    <color name="greenAlpha">#8025645E</color>
 
 <!--    For Transparency Related:-->
 <!--    https://stackoverflow.com/questions/11285961/how-to-make-a-background-20-transparent-on-android-->
