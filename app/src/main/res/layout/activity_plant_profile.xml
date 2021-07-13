@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/nestedScroll"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,7 +29,6 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:src="@drawable/sample_plant"
                     android:scaleType="centerCrop"
                     android:layout_centerInParent="true"
                     android:id="@+id/plantImage"
@@ -39,10 +38,11 @@
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:background="@drawable/circle_bg"
-                    android:backgroundTint="@color/grey"
+                    android:backgroundTint="@color/light_green"
                     android:id="@+id/backButton"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
+                    app:tint="@color/greenVar2"
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="15dp"
                     android:padding="6dp"
@@ -66,7 +66,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hawaiian Hibiscus"
+                    android:text="Common Name"
                     android:textStyle="bold"
                     android:textColor="@color/greenVar2"
                     android:textSize="28sp"
@@ -79,7 +79,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hibiscus rosa-sinensis"
+                    android:text="Scientific Name"
                     android:layout_below="@id/txtPlantCommonName"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="15dp"
@@ -87,232 +87,63 @@
                     android:textSize="18sp"
                     android:textStyle="italic" />
 
-                <!--Accuracy Card-->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="165dp"
-                    android:layout_height="60dp"
-                    app:cardElevation="2dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/accuracyCard"
-                    app:cardCornerRadius="8dp"
-                    app:cardBackgroundColor="@color/pureGrey"
-                    android:layout_below="@id/txtPlantScientificName">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/accuracy_icon"
-                            android:layout_centerVertical="true"
-                            android:id="@+id/icon1"
-                            app:tint="@color/greenVar2"
-                            android:layout_marginStart="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="ACCURACY"
-                            android:layout_marginTop="8dp"
-                            android:textColor="@color/greenVar2"
-                            android:textSize="15sp"
-                            android:id="@+id/txtTitle1"
-                            android:layout_marginStart="13dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_toEndOf="@id/icon1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtTitle1"
-                            android:layout_toEndOf="@id/icon1"
-                            android:layout_marginBottom="10dp"
-                            android:textSize="15sp"
-                            android:id="@+id/txtAccuracy"
-                            android:layout_marginStart="13dp"
-                            android:text="85% " />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <!--Temperature Card-->
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/temperatureCard"
-                    android:layout_width="165dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtPlantScientificName"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="51dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_toEndOf="@+id/accuracyCard"
-                    app:cardBackgroundColor="@color/pureGrey"
-                    app:cardCornerRadius="8dp"
-                    app:cardElevation="5dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/icon"
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:src="@drawable/temperature_icon"
-                            app:tint="@color/greenVar2" />
-
-                        <TextView
-                            android:id="@+id/txtTitle2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginStart="13dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_toEndOf="@id/icon"
-                            android:text="TEMPERATURE"
-                            android:textColor="@color/greenVar2"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtTitle2"
-                            android:layout_marginStart="13dp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_toEndOf="@id/icon"
-                            android:text="15-24 °C"
-                            android:textSize="15sp" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="165dp"
-                    android:layout_height="60dp"
-                    app:cardElevation="2dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/waterCard"
-                    app:cardCornerRadius="8dp"
-                    app:cardBackgroundColor="@color/pureGrey"
-                    android:layout_below="@id/accuracyCard">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/drop_icon"
-                            android:layout_centerVertical="true"
-                            android:id="@+id/icon3"
-                            app:tint="@color/greenVar2"
-                            android:layout_marginStart="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="WATER"
-                            android:layout_marginTop="8dp"
-                            android:textColor="@color/greenVar2"
-                            android:textSize="15sp"
-                            android:id="@+id/txtTitle3"
-                            android:layout_marginStart="13dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_toEndOf="@id/icon3" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtTitle3"
-                            android:layout_toEndOf="@id/icon3"
-                            android:layout_marginBottom="10dp"
-                            android:textSize="15sp"
-                            android:layout_marginStart="13dp"
-                            android:text="250 ml " />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <!--Light Card-->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="165dp"
-                    android:layout_height="wrap_content"
-                    app:cardElevation="2dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="13dp"
-                    android:id="@+id/lightCard"
-                    app:cardCornerRadius="8dp"
-                    app:cardBackgroundColor="@color/pureGrey"
-                    android:layout_below="@id/temperatureCard">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/sun_icon"
-                            android:layout_centerVertical="true"
-                            android:id="@+id/icon4"
-                            app:tint="@color/greenVar2"
-                            android:layout_marginStart="12dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="LIGHT"
-                            android:layout_marginTop="8dp"
-                            android:textColor="@color/greenVar2"
-                            android:textSize="15sp"
-                            android:id="@+id/txtTitle4"
-                            android:layout_marginStart="13dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_toEndOf="@id/icon4" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/txtTitle4"
-                            android:layout_toEndOf="@id/icon4"
-                            android:textSize="15sp"
-                            android:layout_marginTop="1dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginStart="13dp"
-                            android:text="Low" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/plantAttrRecycler"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/txtPlantScientificName" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:justificationMode="inter_word"
-                    android:layout_below="@id/waterCard"
+                    android:layout_below="@id/plantAttrRecycler"
                     android:layout_marginStart="15dp"
                     android:layout_alignParentStart="true"
                     android:id="@+id/txtPlantDescription"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:text="Azadirachta indica, commonly known as neem, nimtree or Indian lilac, is a tree in the mahogany family Meliaceae. It is one of two species in the genus Azadirachta, and is native to the Indian subcontinent and most of the countries in Africa. It is typically grown in tropical and semi-tropical regions. Neem trees also grow on islands in southern Iran. Its fruits and seeds are the source of neem oil."
                     tools:targetApi="o" />
+
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:paddingEnd="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Try Again!"
+                    android:padding="5dp"
+                    android:textAllCaps="false"
+                    android:layout_alignParentStart="true"
+                    android:textSize="15sp"
+                    android:layout_toStartOf="@id/btnAddPlant"
+                    android:layout_marginEnd="15dp"
+                    android:layout_below="@id/txtPlantDescription"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:id="@+id/btnTryAgain"
+                    android:layout_marginBottom="5dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Plant to My Garden"
+                    android:textAllCaps="false"
+                    android:layout_below="@id/txtPlantDescription"
+                    android:textSize="15sp"
+                    android:paddingStart="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/btnAddPlant"
+                    android:layout_marginTop="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:padding="5dp" />
+
 
             </RelativeLayout>
 
@@ -334,45 +165,6 @@
 
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="@color/light_green"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/bottomRelativeLayout"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:paddingEnd="5dp"
-            android:layout_height="wrap_content"
-            android:text="Wrong, Try again!"
-            android:padding="5dp"
-            android:textAllCaps="false"
-            android:layout_alignParentStart="true"
-            android:textSize="15sp"
-            android:layout_toStartOf="@id/btnAddPlant"
-            android:layout_marginEnd="15dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="8dp"
-            android:id="@+id/btnTryAgain"
-            android:layout_marginBottom="5dp"
-            app:icon="@drawable/ic_baseline_highlight_off_24" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Correct, Add Plant"
-            android:textAllCaps="false"
-            android:textSize="15sp"
-            android:id="@+id/btnAddPlant"
-            android:layout_marginTop="5dp"
-            app:icon="@drawable/ic_baseline_check_circle_outline_24"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:padding="5dp" />
-
-    </RelativeLayout>
 
 
 

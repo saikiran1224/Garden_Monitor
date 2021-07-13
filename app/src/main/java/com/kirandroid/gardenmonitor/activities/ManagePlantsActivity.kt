@@ -40,7 +40,6 @@ import kotlinx.android.synthetic.main.activity_manage_plants.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
-
 /*
 This Activity does the following:
 
@@ -87,14 +86,18 @@ class ManagePlantsActivity : AppCompatActivity() {
         // initialising App Preferences
         AppPreferences.init(this)
 
-
         imagesList = ArrayList()
         organsList = ArrayList()
 
+        // getting intent
         val intent = intent
-        if (!intent.getStringExtra("image_source")!!.isEmpty()) {
+        if (!intent.getStringExtra("image_source")!!.isEmpty() and !intent.getStringExtra("image_source")!!.equals("tryAgain")) {
             // intent is passed show dialog
             showCustomDialog(intent.getStringExtra("imageURI")!!)
+
+        } else if(intent.getStringExtra("image_source")!!.equals("tryAgain")) {
+            // Try again case
+            showInfoMessage("Please do add more images of plant with high Quality and better Background Light so it could recognise the Plant clearly")
         }
 
         // initialising Cloud Firestore
@@ -105,15 +108,13 @@ class ManagePlantsActivity : AppCompatActivity() {
 
         recognizePlant.setOnClickListener { recognisePlant() }
 
-
-        infoIcon.setOnClickListener { showInfoMessage() }
-
+        infoIcon.setOnClickListener { showInfoMessage("We recommend you to add minimum 3 plant organs and a Maximum of 5 plant organs for better recognition of Plant.") }
 
     }
 
     // function for showing Info Message dialog
     @SuppressLint("SetTextI18n")
-    fun showInfoMessage() {
+    fun showInfoMessage(message: String) {
 
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_info_message)
@@ -121,6 +122,10 @@ class ManagePlantsActivity : AppCompatActivity() {
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
 
         dialog.findViewById<Button>(R.id.btnThanks).setOnClickListener {
+
+            if(message.equals("Please do add more images of plant with high Quality and better Background Light so it could recognise the Plant clearly")) {
+                getPlantOrganImageData()
+            }
             dialog.dismiss()
         }
 
@@ -129,8 +134,7 @@ class ManagePlantsActivity : AppCompatActivity() {
         dialog.findViewById<LottieAnimationView>(R.id.lottieAnim).playAnimation()
 
         // setting Info Message
-        dialog.findViewById<TextView>(R.id.txtMessage).text = "We recommend you to add minimum 3 plant organs and a Maximum of 5 plant organs for better recognition of Plant."
-
+        dialog.findViewById<TextView>(R.id.txtMessage).text = message
         dialog.show()
 
     }
@@ -274,7 +278,7 @@ class ManagePlantsActivity : AppCompatActivity() {
                 }
 
                 if(plantsOrganList.size == 2) {
-                    showInfoMessage()
+                    showInfoMessage("We recommend you to add minimum 3 plant organs and a Maximum of 5 plant organs for better recognition of Plant.")
                 }
 
                 // disabling and enabling the button
@@ -289,6 +293,7 @@ class ManagePlantsActivity : AppCompatActivity() {
                     val gridLayoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
                     plantsRecycler.adapter = plantOrganImageAdapter
                     plantsRecycler.layoutManager = gridLayoutManager
+
                 } else {
                     Toast.makeText(this, "" + plantsOrganList.size, Toast.LENGTH_SHORT).show()
                 }
@@ -327,7 +332,7 @@ class ManagePlantsActivity : AppCompatActivity() {
 
 
                 val commonName = it.results[0].species.commonNames[0].toString()
-                val scientificName = it.results[0].species.scientificName.toString()
+                val scientificName = it.results[0].species.scientificNameWithoutAuthor.toString()
                 val floatAccuracy = it.results[0].score.toFloat()*100
                 val accuracy = "%.2f".format(it.results[0].score.toFloat()*100)
                 val plantImageUrl = it.results[0].images[0].url.m
@@ -346,7 +351,7 @@ class ManagePlantsActivity : AppCompatActivity() {
                     dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).playAnimation()
                     dialog.findViewById<LottieAnimationView>(R.id.recognisingAnim).loop(false)
 
-                    dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).text = spannableString("Recognised as " + it.results[0].species.scientificName + " with " + "%.2f".format(it.results[0].score.toFloat() * 100) + "% accuracy", 14, (14 + it.results[0].species.scientificName.length))
+                    dialog.findViewById<TextView>(R.id.txtMessageAfterRecognised).text = spannableString("Recognised as " + it.results[0].species.commonNames[0] + " with " + "%.2f".format(it.results[0].score.toFloat() * 100) + "% accuracy", 14, (14 + it.results[0].species.commonNames[0].length))
 
                     dialog.findViewById<Button>(R.id.btnSearchGoogle).setOnClickListener {
                         dialog.dismiss()
@@ -358,8 +363,12 @@ class ManagePlantsActivity : AppCompatActivity() {
                         // passing Plant Scientific Name to Wiki API to fetch data
                         val intent = Intent(this,WikiPlantProfileActivity::class.java)
                         intent.putExtra("plant_name",commonName)
-                        intent.putExtra("scientificName",scientificName)
+                        intent.putExtra("scientific_name",scientificName)
+                        intent.putExtra("accuracy",accuracy.toString())
+                        intent.putExtra("imageUrl",plantImageUrl)
                         startActivity(intent)
+
+                        dialog.dismiss()
 
 
                         //startActivity(Intent(this, MainActivity::class.java))
@@ -382,31 +391,6 @@ class ManagePlantsActivity : AppCompatActivity() {
             AppPreferences.showToast(this,"Something wrong Occurred! Please try again")
         }
 
-    }
-
-    private fun addPlantToMyGarden(scientificName: String, accuracy: String, imageurl: String) {
-
-        val plantData: PlantData = PlantData(scientificName,imageurl,accuracy,AppUtils.getCurrentDate(),AppUtils.getCurrentTime())
-
-        // deleting data from Firestore
-        db.collection("Plant_Organ").get().addOnSuccessListener {
-            result ->
-              for(document in result) {
-                  // deleting each document in collection of Plant_Organ
-                  db.collection("Plant_Organ").document(document.id).delete().addOnFailureListener {
-                      AppPreferences.showToast(this,it.localizedMessage)
-                  }
-              }
-        }
-
-        // adding Data to My Garden Database
-        db.collection("My_Garden")
-            .add(plantData)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(this, "Success! Plant added to My Garden!", Toast.LENGTH_LONG).show()
-            }.addOnFailureListener { error ->
-                Toast.makeText(this, "Error adding plant: $error", Toast.LENGTH_LONG).show()
-            }
     }
 
     private fun spannableString(text: String, start: Int, end: Int): SpannableString? {

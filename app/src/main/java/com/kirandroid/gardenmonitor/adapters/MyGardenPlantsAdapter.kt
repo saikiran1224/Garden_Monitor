@@ -1,13 +1,16 @@
 package com.kirandroid.gardenmonitor.adapters
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.models.PlantData
 
@@ -22,7 +25,23 @@ class MyGardenPlantsAdapter(private val context: Context, private val plantsList
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        Glide.with(context).load(plantsList.get(position).plantImageUrl).into(holder.plantIcon)
+
+        // Showing Progress Indicator for loading Images
+        val circularProgressDrawable = CircularProgressDrawable(context)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.setColorFilter(0xf25645E, PorterDuff.Mode.SRC_ATOP)
+        circularProgressDrawable.start()
+
+        val requestOptions = RequestOptions()
+        requestOptions.placeholder(circularProgressDrawable)
+        requestOptions.error(R.drawable.icon)
+        requestOptions.skipMemoryCache(true)
+        requestOptions.fitCenter()
+
+        Glide.with(context).load(plantsList.get(position).plantImageUrl)
+            .apply(requestOptions)
+            .into(holder.plantIcon)
         holder.plantDate.setText(plantsList.get(position).date)
         holder.plantName.setText(plantsList.get(position).plantScientificName)
 
