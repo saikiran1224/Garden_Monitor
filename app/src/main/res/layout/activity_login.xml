@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/call_background"
+    android:layout_height="match_parent"
+    tools:context=".activities.LoginActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome to"
+        android:textColor="@color/greenVar2"
+        android:id="@+id/txtWelcome"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="22sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Garden Monitor"
+        android:layout_marginStart="15dp"
+        android:layout_below="@id/txtWelcome"
+        android:textColor="@color/greenVar2"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:id="@+id/txtFoodlyt"
+        android:textSize="27sp"
+        android:layout_marginTop="5dp" />
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="80dp"
+        android:layout_alignEnd="@id/txtFoodlyt"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="8dp"
+        android:layout_alignBottom="@id/txtFoodlyt"
+        android:padding="-10dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/icon"
+        android:layout_alignTop="@id/txtWelcome"
+        android:visibility="visible" />
+
+    <View
+        android:layout_width="260dp"
+        android:layout_height="4dp"
+        android:layout_marginStart="15dp"
+        android:id="@+id/viewDivider"
+        android:layout_marginTop="15dp"
+        android:background="@color/grey"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/txtFoodlyt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get ready to experience the New way of Digital Gardening and gain Botanical Knowledge."
+        android:layout_below="@id/viewDivider"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:id="@+id/txtRestDesc"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@id/viewDivider" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Phone Number"
+        app:endIconMode="clear_text"
+        app:prefixText="+91"
+        android:layout_below="@id/txtRestDesc"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/layoutEdit"
+        app:startIconDrawable="@drawable/ic_baseline_local_phone_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/editPhoneNumber"
+            android:maxLength="10"
+            android:inputType="number"
+            android:drawablePadding="5dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--
+           <ImageView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:scaleType="fitXY"
+               android:layout_centerInParent="true"
+               android:src="@drawable/bottom_left_call" />
+    -->
+
+
+    <Button
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:text="Send OTP"
+        android:textSize="16sp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/layoutEdit"
+        android:textAllCaps="false"
+        android:background="@drawable/rounded_bg"
+        android:id="@+id/btnSendOTP"
+        android:backgroundTint="@color/greenVar2"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+</RelativeLayout>
