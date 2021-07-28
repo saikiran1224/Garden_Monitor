@@ -1,5 +1,6 @@
 package com.kirandroid.gardenmonitor.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.FirebaseApp
@@ -60,6 +62,7 @@ class MyGardenFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private fun getPlantData() {
 
         db.collection("My_Garden").get().addOnSuccessListener {
@@ -74,10 +77,10 @@ class MyGardenFragment : Fragment() {
                   txtNoData.visibility = View.GONE
 
                   // initialising adapter
-                  val plantOrganImageAdapter = MyGardenPlantsAdapter(requireContext(), plantsList)
-                  val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+                  val plantOrganImageAdapter = context?.let { MyGardenPlantsAdapter(it, plantsList) }
+                  val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
                   plantsRecyclerView.adapter = plantOrganImageAdapter
-                  plantsRecyclerView.layoutManager = gridLayoutManager
+                  plantsRecyclerView.layoutManager = linearLayoutManager
 
               } else {
                   // No Data in My Garden

@@ -79,7 +79,8 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="10dp"
             android:id="@+id/edtSearch"
-            android:background="@drawable/rounded_bg"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="@color/grey"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="20dp"
             android:drawableTint="@color/greenVar2"
@@ -121,9 +122,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/edtSearch"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="0dp"
             android:layout_marginBottom="65dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginTop="0dp"
             android:id="@+id/plantsRecycler"/>
 
