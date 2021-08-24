@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
@@ -23,7 +22,7 @@ import com.kirandroid.gardenmonitor.adapters.MyGardenPlantsAdapter
 import com.kirandroid.gardenmonitor.models.PlantData
 import kotlinx.android.synthetic.main.fragment_my_garden.view.*
 
-class MyGardenFragment : Fragment() {
+class MyGardenFragment: Fragment() {
 
     lateinit var plantsRecyclerView: RecyclerView
     lateinit var plantsList: ArrayList<PlantData>
@@ -33,6 +32,7 @@ class MyGardenFragment : Fragment() {
 
     lateinit var db: FirebaseFirestore
 
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_garden, container, false)
@@ -40,7 +40,6 @@ class MyGardenFragment : Fragment() {
         // initialising Firebase and Firestore
         FirebaseApp.initializeApp(requireContext())
         db = Firebase.firestore
-
 
         plantsRecyclerView = view.findViewById(R.id.plantsRecycler)
         plantsList = ArrayList()

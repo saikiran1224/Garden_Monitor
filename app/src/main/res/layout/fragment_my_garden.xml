@@ -12,20 +12,21 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/txtUserNameGreeting"
             android:layout_width="wrap_content"
-            android:textColor="@color/greenVar2"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textStyle="bold"
-            android:minLines="2"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
             android:layout_toStartOf="@id/scanPlantsIcon"
             android:maxLines="2"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
+            android:minLines="2"
+            android:padding="5dp"
+            android:text="Hello,\nHope you are fine!"
+            android:textColor="@color/greenVar2"
             android:textSize="20sp"
-            android:text="Hello,\nSaikiran Kopparthi"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp" />
+            android:textStyle="bold" />
 
 
 <!--
@@ -119,16 +120,14 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/plantsRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/edtSearch"
             android:layout_marginStart="0dp"
-            android:layout_marginBottom="65dp"
-            android:layout_marginEnd="0dp"
             android:layout_marginTop="0dp"
-            android:id="@+id/plantsRecycler"/>
-
-
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="65dp" />
 
     </RelativeLayout>
 

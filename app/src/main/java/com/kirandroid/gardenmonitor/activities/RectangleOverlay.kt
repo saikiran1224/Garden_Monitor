@@ -7,10 +7,8 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.utils.AppPreferences
-import kotlin.math.abs
 import kotlin.math.roundToInt
 
 

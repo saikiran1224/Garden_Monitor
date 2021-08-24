@@ -3,6 +3,7 @@ package com.kirandroid.gardenmonitor.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.kirandroid.gardenmonitor.R
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -13,9 +14,15 @@ class LoginActivity : AppCompatActivity() {
 
 
         btnSendOTP.setOnClickListener {
-            val intent = Intent(this, OTPActivity::class.java)
 
-            startActivity(intent)
+            if(editPhoneNumber.text!!.length < 10) {
+                Toast.makeText(this,"Please enter Valid Phone Number",Toast.LENGTH_LONG).show()
+            } else {
+                val intent = Intent(this, OTPActivity::class.java)
+                intent.putExtra("phoneNumber", editPhoneNumber.text.toString())
+                startActivity(intent)
+            }
+
         }
     }
 }

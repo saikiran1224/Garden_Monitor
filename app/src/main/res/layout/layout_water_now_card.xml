@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardBackgroundColor="@color/light_green"
+    app:cardElevation="8dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/plantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="21dp"
+            android:text="Hawaiian Hibiscus"
+            android:textColor="@color/greenVar2"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/plantDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/plantName"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:drawableTint="@android:color/darker_gray"
+            android:gravity="center_vertical"
+            android:text="29th Aug, 2021"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp"
+            android:textStyle="italic" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/circle_bg"
+            android:backgroundTint="@color/grey"
+            android:id="@+id/waterDropIcon"
+            android:defaultFocusHighlightEnabled="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="15dp"
+            android:src="@drawable/drop_colored"
+            app:tint="@color/greenVar2" />
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+
+</androidx.cardview.widget.CardView>

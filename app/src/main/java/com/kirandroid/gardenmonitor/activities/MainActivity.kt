@@ -11,9 +11,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val myGardenFragment: MyGardenFragment = MyGardenFragment()
+    private var myGardenFragment: MyGardenFragment = MyGardenFragment()
     private val waterNowFragment: WaterNowFragment = WaterNowFragment()
     private val profileFragment: ProfileFragment = ProfileFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

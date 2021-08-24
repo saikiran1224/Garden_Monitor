@@ -18,6 +18,8 @@
         <item name="fontFamily">@font/quicksand_medium</item>
 
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+
+        <item name="pinViewStyle">@style/PinWidget.PinView</item>
     </style>
 
     <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">

@@ -31,7 +31,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import com.kirandroid.gardenmonitor.R
 import com.kirandroid.gardenmonitor.adapters.PlantOrganImageAdapter
-import com.kirandroid.gardenmonitor.models.PlantData
 import com.kirandroid.gardenmonitor.models.PlantOrganImageData
 import com.kirandroid.gardenmonitor.utils.AppPreferences
 import com.kirandroid.gardenmonitor.utils.AppUtils

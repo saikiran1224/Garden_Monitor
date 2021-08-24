@@ -75,19 +75,19 @@
 -->
 
                 <TextView
+                    android:id="@+id/plantDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="29th Aug, 2021"
-                    android:drawableStart="@drawable/ic_baseline_calendar_today_24"
-                    android:drawableTint="@android:color/darker_gray"
-                    android:textSize="15sp"
-                    android:id="@+id/plantDate"
+                    android:layout_below="@id/txtPlantName"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="10dp"
-                    android:textColor="@android:color/darker_gray"
+                    android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="@android:color/darker_gray"
                     android:gravity="center_vertical"
-                    android:layout_below="@id/txtPlantName"
-                    android:drawablePadding="8dp" />
+                    android:text="29th Aug, 2021"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp" />
 
                 <Button
                     android:layout_width="wrap_content"

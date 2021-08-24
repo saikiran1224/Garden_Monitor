@@ -60,6 +60,8 @@ object AppPreferences {
             it.putString(CUST_EMAIL.first, value)
         }
 
+
+
     var customerAddress: String?
         get() = preferences.getString(CUST_ADDRESS.first, CUST_ADDRESS.second)
         set(value) = preferences.edit {

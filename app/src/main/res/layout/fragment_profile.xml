@@ -3,13 +3,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/light_green"
     tools:context=".fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/centerImage"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/profile_illustration" />
+
+        <TextView
+            android:id="@+id/txtWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/centerImage"
+            android:layout_centerHorizontal="true"
+            android:text="Welcome Onboard !"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtWelcome"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/txtNameCard"
+            android:layout_marginTop="35dp"
+            android:backgroundTint="@color/greenVar2"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/white"
+                android:gravity="center"
+                android:paddingStart="25dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="25dp"
+                android:paddingBottom="8dp"
+                android:text="Loading..."
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtNameCard"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/greenVar2"
+            app:cardCornerRadius="15dp">
+
+            <TextView
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_email_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/white"
+                android:gravity="center"
+                android:paddingStart="25dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="25dp"
+                android:paddingBottom="8dp"
+                android:text="Loading Mail Address..."
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </RelativeLayout>
+
+
 
 </androidx.core.widget.NestedScrollView>
