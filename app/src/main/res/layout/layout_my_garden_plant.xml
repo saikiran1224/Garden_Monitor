@@ -90,16 +90,17 @@
                     android:textSize="15sp" />
 
                 <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_marginTop="15dp"
                     android:layout_below="@id/plantDate"
                     android:layout_alignParentStart="true"
+                    android:layout_marginTop="15dp"
+                    android:visibility="gone"
+                    android:gravity="center"
                     android:text="Visit Plant"
                     android:textAllCaps="false"
-                    android:textSize="14sp"
-                    android:gravity="center" />
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 

@@ -42,6 +42,7 @@ class MyGardenPlantsAdapter(private val context: Context, private val plantsList
         Glide.with(context).load(plantsList.get(position).plantImageUrl)
             .apply(requestOptions)
             .into(holder.plantIcon)
+
         holder.plantDate.setText(plantsList.get(position).date)
         holder.plantName.setText(plantsList.get(position).plantScientificName)
 

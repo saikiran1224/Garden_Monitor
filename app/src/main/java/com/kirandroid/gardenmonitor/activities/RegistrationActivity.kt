@@ -29,8 +29,6 @@ class RegistrationActivity : AppCompatActivity() {
 
         db = Firebase.firestore
 
-
-
         btnSubmit.setOnClickListener {
 
             name = editName.text.toString().trim()

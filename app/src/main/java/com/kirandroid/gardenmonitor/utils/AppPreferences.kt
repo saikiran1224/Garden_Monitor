@@ -18,11 +18,9 @@ object AppPreferences {
     private val CUST_ADDRESS = Pair("custAddress","")
     private val CUST_PHONE = Pair("custPhone","")
 
-
     fun init(context: Context) {
         preferences = context.getSharedPreferences(NAME, MODE)
     }
-
 
     //an inline function to put variable and save it
     private inline fun SharedPreferences.edit(operation: (SharedPreferences.Editor) -> Unit) {
@@ -59,8 +57,6 @@ object AppPreferences {
         set(value) = preferences.edit {
             it.putString(CUST_EMAIL.first, value)
         }
-
-
 
     var customerAddress: String?
         get() = preferences.getString(CUST_ADDRESS.first, CUST_ADDRESS.second)

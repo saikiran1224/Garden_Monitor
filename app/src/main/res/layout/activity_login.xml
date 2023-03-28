@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Welcome to"
         android:textColor="@color/greenVar2"
-        android:id="@+id/txtWelcome"
+        android:id="@+id/txtWelcome
         android:layout_alignParentStart="true"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
@@ -98,21 +98,20 @@
                android:src="@drawable/bottom_left_call" />
     -->
 
-
     <Button
+        android:id="@+id/btnSendOTP"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:text="Send OTP"
-        android:textSize="16sp"
-        android:layout_alignParentEnd="true"
         android:layout_below="@id/layoutEdit"
-        android:textAllCaps="false"
-        android:background="@drawable/rounded_bg"
-        android:id="@+id/btnSendOTP"
-        android:backgroundTint="@color/greenVar2"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_bg"
+        android:backgroundTint="@color/greenVar2"
         android:gravity="center"
+        android:text="Send OTP"
+        android:textAllCaps="false"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

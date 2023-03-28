@@ -108,15 +108,15 @@
         android:textSize="18sp" />
 
     <Button
+        android:id="@+id/btnNext"
         android:layout_width="match_parent"
-        android:layout_marginBottom="-5dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-5dp"
+        android:padding="17dp"
         android:text="verify"
-        android:id="@+id/btnNext"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:padding="17dp" />
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

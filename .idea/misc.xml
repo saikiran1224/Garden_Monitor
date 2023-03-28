@@ -3,16 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_login.xml" value="0.15902777777777777" />
-        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_manage_plants.xml" value="0.18125" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.26614583333333336" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/drawable/bottom_rounded_circle.xml" value="0.26614583333333336" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/drawable/ic_baseline_add_a_photo_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/drawable/ic_baseline_delete_outline_24.xml" value="0.26614583333333336" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/font/quicksand_medium.xml" value="0.27589743589743587" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_login.xml" value="0.264" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_main.xml" value="0.24615384615384617" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_manage_plants.xml" value="0.4" />
         <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_otpactivity.xml" value="0.264" />
         <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_plant_profile.xml" value="0.2191780821917808" />
         <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_registration.xml" value="0.264" />
-        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/fragment_my_garden.xml" value="0.2191780821917808" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_scan_plants.xml" value="0.24615384615384617" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/dialog_delete_message.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/dialog_error_message.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/dialog_info_message.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/dialog_recognise_plant.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/dialog_show_selected_image.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/fragment_my_garden.xml" value="0.264" />
         <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/fragment_profile.xml" value="0.2191780821917808" />
         <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/fragment_water_now.xml" value="0.2191780821917808" />
-        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/layout_my_garden_plant.xml" value="0.2191780821917808" />
-        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/layout_water_now_card.xml" value="0.2222222222222222" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/layout_my_garden_plant.xml" value="0.264" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/layout_old_my_garden_plant.xml" value="0.2222222222222222" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/layout_plant_attributes.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/layout_plant_organ.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/layout/layout_water_now_card.xml" value="0.264" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/menu/bottom_navigation.xml" value="0.25" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.26614583333333336" />
+        <entry key="..\:/Android Apps/GardenMonitor/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.26614583333333336" />
       </map>
     </option>
   </component>

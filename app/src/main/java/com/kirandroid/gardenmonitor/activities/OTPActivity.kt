@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_otpactivity.*
 import java.util.concurrent.TimeUnit
 
 class OTPActivity : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
     private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
@@ -116,10 +117,7 @@ class OTPActivity : AppCompatActivity() {
     }
 
     // [START resend_verification]
-    private fun resendVerificationCode(
-        phoneNumber: String,
-        token: PhoneAuthProvider.ForceResendingToken?
-    ) {
+    private fun resendVerificationCode(phoneNumber: String, token: PhoneAuthProvider.ForceResendingToken?) {
         val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
             .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit

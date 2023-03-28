@@ -113,7 +113,6 @@ dependencies {
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
-
     //Loading GIFs
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
 
